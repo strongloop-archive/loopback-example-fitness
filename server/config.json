@@ -1,0 +1,9 @@
+{
+  "restApiRoot": "/api",
+  "host": "localhost",
+  "port": 3000,
+  "url": "http://localhost:3000/",
+  "clientID": "11d97ac13c704b34bd57b9c628327202",
+  "clientSecret": "86c5fec39e134e0c872c781e63d3b06e",
+  "callbackURL": "http://localhost:3000/auth/fitbit/callback"
+}
