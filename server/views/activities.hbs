@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>User data</title>
+		
+		<link rel="stylesheet" href="/css/bootstrap-theme.css" type="text/css"
+	          charset="utf:8"/>
+	    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css"
+	          charset="utf:8"/>
+	    <script src="/js/bootstrap.min.js"></script>
+	</head>
+	
+	<body style="margin-left: 10%;">
+		<h1><label>User activities</label></h1>
+
+		<table class="table table-striped" style="width: 35%; float: left">
+			<thead>
+				<th>Activity</th>
+				<th>Distance</th>
+			</thead>
+			<tbody>
+				{{#each data.summary.distances}}
+					<tr>
+						<td>
+							{{activity}}
+						</td>
+						<td>
+							{{distance}}
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<h4 style="float: left; margin-left: 10%; margin-top: -1px; width: 35%;">User scores</h4>
+		<ul class="list-group" style="width: 35%; float: left; margin-left: 10%;">
+			<li class="list-group-item">activeScore : {{data.summary.activeScore}}</li>
+			<li class="list-group-item">activityCalories : {{data.summary.activityCalories}}</li>
+			<li class="list-group-item">caloriesBMR : {{data.summary.caloriesBMR}}</li>
+			<li class="list-group-item">caloriesOut : {{data.summary.caloriesOut}}</li>
+			<li class="list-group-item">elevation : {{data.summary.elevation}}</li>
+			<li class="list-group-item">fairlyActiveMinutes : {{data.summary.fairlyActiveMinutes}}</li>
+			<li class="list-group-item">floors : {{data.summary.floors}}</li>
+			<li class="list-group-item">lightlyActiveMinutes : {{data.summary.lightlyActiveMinutes}}</li>
+			<li class="list-group-item">marginalCalories : {{data.summary.marginalCalories}}</li>
+			<li class="list-group-item">sedentaryMinutes : {{data.summary.sedentaryMinutes}}</li>
+			<li class="list-group-item">steps : {{data.summary.steps}}</li>
+			<li class="list-group-item">veryActiveMinutes : {{data.summary.veryActiveMinutes}}</li>
+		</ul>
+		
+	</body>
+</html>

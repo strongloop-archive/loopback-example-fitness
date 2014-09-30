@@ -2,8 +2,10 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var passport = require('passport');
 var fitBitStrategy = require('passport-fitbit').Strategy;
-
+var UserInfo = require('./fitbitAPI/userInfo.js');
 var app = module.exports = loopback();
+var user = require('./fitbitAPI/userInfo.js');
+module.exports.activities = {};
 
 // Set up the /favicon.ico
 app.use(loopback.favicon());
@@ -53,21 +55,32 @@ if (require.main === module) {
   app.start();
 }
 
-// Strategy for fitbit
+// Passport fitbit strategy 
 passport.use(new fitBitStrategy({
-//  consumerKey: app.get('clientID'),
-//  consumerSecret: app.get('clientSecret'),
-  consumerKey: '11d97ac13c704b34bd57b9c628327202',
-  consumerSecret: '86c5fec39e134e0c872c781e63d3b06e',
+  consumerKey: app.get('clientID'),
+  consumerSecret: app.get('clientSecret'),
   callbackURL: app.get('callbackURL')
 }, function(token, tokenSecret, profile, done){
 	process.nextTick(function(){
-	  console.log('token: ' + token);
-	  console.log('tokenSecret: ' + tokenSecret);
-	  console.log(profile);
-      console.log(JSON.stringify(profile));
+//	  console.log('token: ' + token);
+//	  console.log('tokenSecret: ' + tokenSecret);
+//	  console.log(profile);
+//      console.log(JSON.stringify(profile));
+      app.set('accessToken', token);
+      app.set('accessSecret', tokenSecret);
+//      app.models.fitbitUser.create(profile, function(error, userObj){
+//      	if(error)
+//      		console.log(error);
+//      	done(null, profile);
+//      });
+      UserInfo.accessToken = token;
+      UserInfo.accessSecret = tokenSecret;
       
-      done(null, profile);
+      user.getUsersteps(token, tokenSecret, function(data){
+    		console.log(data);
+    		module.exports.activities = data; 
+    		done(null, data);
+    	});
 	});
 }));
 
