@@ -2,5 +2,13 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mongo": {
+    "connector": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "database": "loopbackFitbit",
+    "username": "",
+    "password": ""
   }
 }
