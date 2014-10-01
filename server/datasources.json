@@ -10,5 +10,21 @@
     "database": "loopbackFitbit",
     "username": "",
     "password": ""
-  }
+  },
+  "fitbit": {
+		"name": "fitbit",
+		"connector": "rest",
+		"operations": [
+			"template": {
+				"method": "GET",
+				"url": "https://api.fitbit.com/1/user/-/activities/date/{date}.json",
+				 "headers": {
+					}
+				"responsePath": "$.results[0]",
+				"functions": {
+					"getUserActivities": ["date"]
+				}
+			}
+		]
+	}
 }
