@@ -57,8 +57,8 @@ if (require.main === module) {
 passport.use(new fitBitStrategy({
 //  consumerKey: app.get('clientID'),
 //  consumerSecret: app.get('clientSecret'),
-  consumerKey: '11d97ac13c704b34bd57b9c628327202',
-  consumerSecret: '86c5fec39e134e0c872c781e63d3b06e',
+	consumerKey: '401c42d0fcae4a81a8827d3b939a3570',
+  consumerSecret: '28ab0a0d2a7c4a79a42c6c058333f1dc',
   callbackURL: app.get('callbackURL')
 }, function(token, tokenSecret, profile, done){
 	process.nextTick(function(){
