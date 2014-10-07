@@ -5,6 +5,7 @@ var Handlebars = require('handlebars');
 var user = require('../fitbitAPI/userInfo.js');
 var server = require('../server.js');
 var moment = require('moment');
+var activities = require('../boot/userActivities.js');
 
 var loginTemp = require('../views/login.hbs');
 var homeTemp = require('../views/home.hbs');
@@ -40,10 +41,13 @@ router.get('/user/activities', function(req, res){
 	var date = req.query.date;
 	if( date === null || date == null )
 		date = '2012-12-10';
-  user.getUsersteps(server.accessToken, server.accessSecret, moment(date).format('YYYY/MM/DD').toString(), function(data){
-		var data = JSON.parse(data);
-  	data['date'] = date.replace(/-/g, '/');
-		console.log(data);
-  	res.send(activitiesTemp({'data': data}));
+//  user.getUsersteps(server.accessToken, server.accessSecret, moment(date).format('YYYY/MM/DD').toString(), function(data){
+//		var data = JSON.parse(data);
+//  	data['date'] = date.replace(/-/g, '/');
+//		console.log(data);
+//  	res.send(activitiesTemp({'data': data}));
+//	});
+	activities.getUserActivities(server.accessToken, function(data){
+		res.send(activitiesTemp({'data': data}));
 	});
 });

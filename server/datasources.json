@@ -22,11 +22,11 @@
 				"headers": {
 					"oauth_consumer_key": "401c42d0fcae4a81a8827d3b939a3570",
 					"oauth_token": "{accessToken}",
-					"oauth_nonce": "Nihkilesh",
-					"oauth_signature":"",
+					"oauth_nonce": "RandomString",
+					"oauth_signature":"EiHiWBSTOLTGhd/0cgF3qnaG4mg=",
 					"oauth_signature_method":"HMAC-SHA1",
 					"oauth_timestamp": "{timestamp}",
-					"oauth_version": "1.0",
+					"oauth_version": "1.0"
 				},
 				"responsePath": "$.results"
 			},
