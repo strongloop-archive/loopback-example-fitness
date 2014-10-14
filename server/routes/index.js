@@ -29,6 +29,12 @@ router.get('/auth/fitbit/callback', passport.authenticate('fitbit', {
     console.log('END');
 });
 
+//router.get('/auth/fitbit/callback', function(data, req, res){
+//	console.log('data ', data.headers.url);
+//	console.log('req ', req);
+//	console.log('res ', res);
+//});
+
 router.get('/auth/success', function(req, res){
   res.send(homeTemp({'success' : 'Logged in successfully'}));
 });
@@ -44,10 +50,11 @@ router.get('/user/activities', function(req, res){
 //  user.getUsersteps(server.accessToken, server.accessSecret, moment(date).format('YYYY/MM/DD').toString(), function(data){
 //		var data = JSON.parse(data);
 //  	data['date'] = date.replace(/-/g, '/');
-//		console.log(data);
 //  	res.send(activitiesTemp({'data': data}));
 //	});
-	activities.getUserActivities(server.accessToken, function(data){
+	console.log('AccessSecret', server.accessSecret);
+	
+	activities.getUserActivities(server.accessToken, server.accessSecret,function(data){
 		res.send(activitiesTemp({'data': data}));
 	});
 });

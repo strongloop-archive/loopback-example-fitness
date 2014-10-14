@@ -9,9 +9,8 @@ exports.initLoopback = function(){
 
 exports.getUsersteps = function(accessToken, accessSecret, date, callback){
 	var oauth = require('oauth');
-	console.log('Date : ' + date);
-	console.log('Client Id: ', app.accessToken);
-	console.log('Client clientSecret: ' + app.get('url'));
+	console.log('access token: ', accessToken);
+
 	var OAuth = new oauth.OAuth(
 			'https://api.fitbit.com/oauth/request_token',
 			'https://api.fitbit.com/oauth/access_token',
