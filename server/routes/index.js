@@ -5,7 +5,7 @@ var Handlebars = require('handlebars');
 var user = require('../fitbitAPI/userInfo.js');
 var server = require('../server.js');
 var moment = require('moment');
-var activities = require('../boot/userActivities.js');
+var userActivities = require('../boot/userActivities.js');
 
 var loginTemp = require('../views/login.hbs');
 var homeTemp = require('../views/home.hbs');
@@ -38,20 +38,19 @@ router.get('/auth/failure', function(req, res){
 
 router.get('/user/activities', function(req, res){
 	var date = req.query.date;
-	// Set a default date for which data is available
+	// Set default date to get existing data from fitbit api
 	if( date === null || date == null )
 		date = '2012-12-10';
 	
-//  user.getUsersteps(server.accessToken, server.accessSecret, moment(date).format('YYYY/MM/DD').toString(), function(data){
-//		var data = JSON.parse(data);
-//  	data['date'] = date.replace(/-/g, '/');
-//  	res.send(activitiesTemp({'data': data}));
-//	});
+	date = moment(date).format('YYYY-MM-DD');
 	
-	console.log('AccessSecret', server.accessSecret);
-	
-	activities.getUserActivities(moment(date).format('YYYY-MM-DD'), server.accessToken, server.accessSecret,function(data){
-		data['date'] = moment(date).format('MM/DD/YYYY');
-		res.send(activitiesTemp({'data': data}));
-	});
+	userActivities.getUserActivities(server.get('clientID'), 
+																	 date, 
+																	 moment().unix(), 
+																	 server.accessToken, 
+																	 userActivities.generateSignature(date, server.accessToken, server.accessSecret), 
+																	 function(err, data){
+                              	   data['date'] = moment(date).format('MM/DD/YYYY');
+                              	     res.send(activitiesTemp({'data': data}));
+																 });
 });
