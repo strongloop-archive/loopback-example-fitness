@@ -4,8 +4,11 @@ var passport = require('passport');
 var fitBitStrategy = require('passport-fitbit').Strategy;
 var app = module.exports = loopback();
 var user = require('./fitbitAPI/userInfo.js');
-module.exports.accessToken = "";
-module.exports.accessSecret = "";
+
+module.exports.access = {
+  "token": "",
+  "secret": ""
+};
 
 module.exports.activities = {};
 
@@ -65,8 +68,8 @@ passport.use(new fitBitStrategy({
   callbackURL: app.get('callbackURL')
 }, function(token, tokenSecret, profile, done){
 	process.nextTick(function(){
-			module.exports.accessToken = token;
-			module.exports.accessSecret = tokenSecret;
+			module.exports.access.token = token;
+			module.exports.access.secret = tokenSecret;
 			done(null, profile);
 	});
 }));

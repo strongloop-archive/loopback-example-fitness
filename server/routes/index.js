@@ -25,7 +25,6 @@ router.get('/auth/fitbit/callback', passport.authenticate('fitbit', {
   successRedirect: '/auth/success',
   errorRedirect: '/auth/failure'
   }), function(req, res){
-    console.log('END');
 });
 
 router.get('/auth/success', function(req, res){
@@ -47,8 +46,8 @@ router.get('/user/activities', function(req, res){
 	userActivities.getUserActivities(server.get('clientID'), 
 																	 date, 
 																	 moment().unix(), 
-																	 server.accessToken, 
-																	 userActivities.generateSignature(date, server.accessToken, server.accessSecret), 
+																	 server.access.token, 
+																	 userActivities.generateSignature(date, server.access.token, server.access.secret), 
 																	 function(err, data){
                               	   data['date'] = moment(date).format('MM/DD/YYYY');
                               	     res.send(activitiesTemp({'data': data}));
