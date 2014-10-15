@@ -11,25 +11,25 @@ var oauth_signature = require('oauth-signature');
 //};
 
 //activityModel.getUserActivities.shared = true;
-//activityModel.getUserActivities.accepts = [{arg: 'date', type: 'string', http: {source: 'path'}}];
-//activityModel.getUserActivities.returns = [{arg: 'data', type: 'object', root: true} ];
-//activityModel.getUserActivities.http = {verb: 'get', path: '/:date'};
+//activityModel.getUserActivities.accepts = [{arg: 'date', type: 'string', http: {source: 'path'},
+//																						arg: 'timestamp', type: 'string', http: {source: 'path'},
+//																						arg: 'accessToken', type: 'string', http: {source: 'path'},
+//																						arg: 'signature', type: 'string', http: {source: 'path'}	}];
 
-exports.getUserActivities = function(accessToken, tokenSecret, cb){
+activityModel.getUserActivities.returns = [{arg: 'data', type: 'object', root: true} ];
+activityModel.getUserActivities.http = {verb: 'get', path: '/:date'};
+
+exports.getUserActivities = function(date, accessToken, tokenSecret, cb){
 	console.log('accessToken: ', accessToken);
+	console.log('date: ', date);
 	
-	
-activityModel.getUserActivities('2012-12-10', moment().unix(), accessToken, generateSignature('2012-12-10', accessToken, tokenSecret).toString(), app.get('callbackURL'), 
+activityModel.getUserActivities(date, moment().unix(), accessToken, generateSignature(date, accessToken, tokenSecret), app.get('callbackURL'), 
 	function(err, data){
   	console.log('Data: ', data);
   	console.log('Err: ', err);
   	cb(data);
   });
 };
-
-app.model(activityModel);
-
-module.exports.activityModel = activityModel;
 
 function generateSignature(date, accessToken, tokenSecret){
 	var parameters = {
@@ -42,10 +42,13 @@ function generateSignature(date, accessToken, tokenSecret){
   };
 	
 	var encodedSignature = oauth_signature.generate('GET', 
-																									'https://api.fitbit.com/1/user/244X7H/activities/date/2012-12-10.json', 
+																									'https://api.fitbit.com/1/user/244X7H/activities/date/' + date + '.json', 
 																									parameters, 
 																									app.get('clientSecret'), 
 																									tokenSecret);
 	console.log(encodedSignature);
 	return encodedSignature;
 };
+
+app.model(activityModel);
+module.exports.activityModel = activityModel;

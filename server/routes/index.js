@@ -18,7 +18,6 @@ router.get('/', function(req, res){
 });
 
 router.get('/login', function(req, res){
-//  res.send(loginTemp({}));
 	res.redirect('/auth/fitbit');
 });
 
@@ -28,12 +27,6 @@ router.get('/auth/fitbit/callback', passport.authenticate('fitbit', {
   }), function(req, res){
     console.log('END');
 });
-
-//router.get('/auth/fitbit/callback', function(data, req, res){
-//	console.log('data ', data.headers.url);
-//	console.log('req ', req);
-//	console.log('res ', res);
-//});
 
 router.get('/auth/success', function(req, res){
   res.send(homeTemp({'success' : 'Logged in successfully'}));
@@ -45,16 +38,20 @@ router.get('/auth/failure', function(req, res){
 
 router.get('/user/activities', function(req, res){
 	var date = req.query.date;
+	// Set a default date for which data is available
 	if( date === null || date == null )
 		date = '2012-12-10';
+	
 //  user.getUsersteps(server.accessToken, server.accessSecret, moment(date).format('YYYY/MM/DD').toString(), function(data){
 //		var data = JSON.parse(data);
 //  	data['date'] = date.replace(/-/g, '/');
 //  	res.send(activitiesTemp({'data': data}));
 //	});
+	
 	console.log('AccessSecret', server.accessSecret);
 	
-	activities.getUserActivities(server.accessToken, server.accessSecret,function(data){
+	activities.getUserActivities(moment(date).format('YYYY-MM-DD'), server.accessToken, server.accessSecret,function(data){
+		data['date'] = moment(date).format('MM/DD/YYYY');
 		res.send(activitiesTemp({'data': data}));
 	});
 });
