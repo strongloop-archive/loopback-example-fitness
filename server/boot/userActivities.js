@@ -20,7 +20,7 @@ userActivityModel.generateSignature = function(date, accessToken, tokenSecret, r
 	};
 
 	return encodedSignature = oauth_signature.generate('GET',
-	    'https://api.fitbit.com/1/user/244X7H/activities/date/' + date + '.json',
+	    'https://api.fitbit.com/1/user/-/activities/date/' + date + '.json',
 	    parameters, app.get('clientSecret'), tokenSecret);
 };
 
