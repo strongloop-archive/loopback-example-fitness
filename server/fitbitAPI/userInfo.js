@@ -22,7 +22,7 @@ exports.getUsersteps = function(accessToken, accessSecret, date, callback){
 		);
 	
 	OAuth.get(
-	  'https://api.fitbit.com/1/user/244X7H/activities/date/' + date.toString().replace(/\//g,'-') + '.json',
+	  'https://api.fitbit.com/1/user/-/activities/date/' + date.toString().replace(/\//g,'-') + '.json',
 	  accessToken,
 	  accessSecret,
   	function (err, data, res) {

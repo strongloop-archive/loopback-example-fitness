@@ -20,11 +20,11 @@
 				"method": "GET",
 				"url": "https://api.fitbit.com/1/user/244X7H/activities/date/{date}.json",
 				"headers": {
-				  "Authorization": "OAuth oauth_consumer_key=\"{consumerkey}\", oauth_token=\"{accessToken}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{timestamp}\", oauth_nonce=\"fvrebrberereber\", oauth_signature=\"{signature}\", oauth_version=\"1.0\""
+				  "Authorization": "OAuth oauth_consumer_key=\"{consumerkey}\", oauth_token=\"{accessToken}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{timestamp}\", oauth_nonce=\"{nonce}\", oauth_signature=\"{signature}\", oauth_version=\"1.0\""
 			  }
 			},
 			"functions": {
-					"getUserActivities": ["consumerkey", "date", "timestamp", "accessToken", "signature"]
+					"getUserActivities": ["consumerkey", "date", "timestamp", "accessToken", "signature", "nonce"]
 				}
 		}]
 	}

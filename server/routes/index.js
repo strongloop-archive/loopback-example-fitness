@@ -6,10 +6,12 @@ var user = require('../fitbitAPI/userInfo.js');
 var server = require('../server.js');
 var moment = require('moment');
 var userActivities = require('../boot/userActivities.js');
+var rs = require('randomstring');
 
 var loginTemp = require('../views/login.hbs');
 var homeTemp = require('../views/home.hbs');
 var activitiesTemp = require('../views/activities.hbs');
+var randomString = rs.generate(10);
 
 router.get('/auth/fitbit', passport.authenticate('fitbit'));
 
@@ -49,7 +51,7 @@ router.get('/user/activities', function(req, res) {
 
 	userActivities.getUserActivities(server.get('clientID'), date, moment()
 	    .unix(), server.access.token, userActivities.generateSignature(date,
-	    server.access.token, server.access.secret), function(err, data) {
+	    server.access.token, server.access.secret, randomString), randomString, function(err, data) {
 		data['date'] = moment(date).format('MM/DD/YYYY');
 		res.send(activitiesTemp({
 			'data' : data
