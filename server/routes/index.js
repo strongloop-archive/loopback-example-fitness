@@ -1,3 +1,9 @@
+/*
+	 * Set response type to 
+	 * server - for checking server side ui 
+	 * app - to send response to mobile application
+*/
+
 var loopback = require('loopback');
 var router = module.exports = loopback.Router();
 var passport = require('passport');
@@ -7,7 +13,7 @@ var server = require('../server.js');
 var moment = require('moment');
 var userActivities = require('../boot/userActivities.js');
 var rs = require('randomstring');
-
+var debug = require('debug')('router');
 var loginTemp = require('../views/login.hbs');
 var homeTemp = require('../views/home.hbs');
 var activitiesTemp = require('../views/activities.hbs');
@@ -30,15 +36,27 @@ router.get('/auth/fitbit/callback', passport.authenticate('fitbit', {
 });
 
 router.get('/auth/success', function(req, res) {
-	res.send(homeTemp({
-		'success' : 'Logged in successfully'
-	}));
+	if (server.get('responseType') == "server") {
+		res.send(homeTemp({
+			'success' : 'Logged in successfully'
+		}));
+	}
+
+	else if (server.get('responseType') == "app") {
+		res.send({
+			'status' : 'success'
+		});
+	}
 });
 
 router.get('/auth/failure', function(req, res) {
-	res.send(homeTemp({
-		'failure' : 'Login unsuccessfull'
-	}));
+	/* User interface for serer side */
+	// res.send(homeTemp({
+	// 'failure' : 'Login unsuccessfull'
+	// }));
+	res.send({
+		'status' : 'failure'
+	});
 });
 
 router.get('/user/activities', function(req, res) {
@@ -51,10 +69,19 @@ router.get('/user/activities', function(req, res) {
 
 	userActivities.getUserActivities(server.get('clientID'), date, moment()
 	    .unix(), server.access.token, userActivities.generateSignature(date,
-	    server.access.token, server.access.secret, randomString), randomString, function(err, data) {
-		data['date'] = moment(date).format('MM/DD/YYYY');
-		res.send(activitiesTemp({
-			'data' : data
-		}));
-	});
+	    server.access.token, server.access.secret, randomString), randomString,
+	    function(err, data) {
+		    data['date'] = moment(date).format('MM/DD/YYYY');
+		    debug('data: ' + JSON.stringify(data));
+
+		    if (server.get('responseType') == "server") {
+			    res.send(activitiesTemp({
+				    'data' : data
+			    }));
+		    } else if (server.get('responseType') == "server") {
+			    res.send({
+				    'data' : data
+			    });
+		    }
+	    });
 });
