@@ -60,6 +60,7 @@ router.get('/auth/failure', function(req, res) {
 });
 
 router.get('/user/activities', function(req, res) {
+	console.log('Get activities');
 	var date = req.query.date;
 	// Set default date to get existing data from fitbit api
 	if (date === null || date == null)
@@ -78,7 +79,7 @@ router.get('/user/activities', function(req, res) {
 			    res.send(activitiesTemp({
 				    'data' : data
 			    }));
-		    } else if (server.get('responseType') == "server") {
+		    } else if (server.get('responseType') == "app") {
 			    res.send({
 				    'data' : data
 			    });
