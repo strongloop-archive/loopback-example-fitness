@@ -1,0 +1,103 @@
+{
+  "name": "user",
+  "plural": "users",
+  "base": "PersistedModel",
+  "properties": {
+    "avatar": {
+      "type": "string",
+      "required": true
+    },
+    "avatar150": {
+      "type": "string",
+      "required": true
+    },
+    "dateOfBirth": {
+      "type": "date",
+      "required": true
+    },
+    "displayName": {
+      "type": "string",
+      "required": true
+    },
+    "distanceUnit": {
+      "type": "string",
+      "required": true
+    },
+    "encodedId": {
+      "type": "string",
+      "required": true
+    },
+    "foodsLocale": {
+      "type": "string",
+      "required": true
+    },
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "gender": {
+      "type": "string",
+      "required": true
+    },
+    "glucoseUnit": {
+      "type": "string",
+      "required": true
+    },
+    "height": {
+      "type": "number",
+      "required": true
+    },
+    "heightUnit": {
+      "type": "string",
+      "required": true
+    },
+    "locale": {
+      "type": "string",
+      "required": true
+    },
+    "memberSince": {
+      "type": "date",
+      "required": true
+    },
+    "nickname": {
+      "type": "string",
+      "required": true
+    },
+    "offsetFromUTCMillis": {
+      "type": "number",
+      "required": true
+    },
+    "startDayOfWeek": {
+      "type": "string",
+      "required": true
+    },
+    "strideLengthRunning": {
+      "type": "number",
+      "required": true
+    },
+    "strideLengthWalking": {
+      "type": "number",
+      "required": true
+    },
+    "timezone": {
+      "type": "string",
+      "required": true
+    },
+    "waterUnit": {
+      "type": "string",
+      "required": true
+    },
+    "weight": {
+      "type": "number",
+      "required": true
+    },
+    "weightUnit": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -12,11 +12,13 @@ var user = require('../fitbitAPI/userInfo.js');
 var server = require('../server.js');
 var moment = require('moment');
 var userActivities = require('../boot/userActivities.js');
+var genericActivities = require('../boot/weekActivities.js');
 var rs = require('randomstring');
 var debug = require('debug')('router');
 var loginTemp = require('../views/login.hbs');
 var homeTemp = require('../views/home.hbs');
 var activitiesTemp = require('../views/activities.hbs');
+var userProfile = require('../boot/userProfile.js');
 var randomString = rs.generate(10);
 
 router.get('/auth/fitbit', passport.authenticate('fitbit'));
@@ -75,14 +77,21 @@ router.get('/user/activities', function(req, res) {
 		    data['date'] = moment(date).format('MM/DD/YYYY');
 		    debug('data: ' + JSON.stringify(data));
 
-		    if (server.get('responseType') == "server") {
-			    res.send(activitiesTemp({
-				    'data' : data
-			    }));
-		    } else if (server.get('responseType') == "app") {
-			    res.send({
-				    'data' : data
-			    });
-		    }
+			returndata = data;
+
+			userProfile.getAttribute('fullName',server.access.userID,function(data){
+				returndata.summary['fullName'] = data;	
+
+				if (server.get('responseType') == "server") {
+			    //res.send(activitiesTemp({
+				//    'data' : returndata
+			    //}));
+				res.send(returndata);
+		    	} else if (server.get('responseType') == "app") {
+				    res.send({
+					    'data' : returndata
+				    });
+		   	    }
+			});
 	    });
 });

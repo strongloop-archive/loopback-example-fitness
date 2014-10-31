@@ -29,5 +29,24 @@
 				}
 			}
 		]
-	}
+	},
+	"generic":{
+    "name" : "generic",
+    "connector" : "rest",
+    "debug" : "true",
+    "operations" : [
+      {
+        "template" : {
+          "method" : "GET",
+          "url" : "https://api.fitbit.com/1/user/-/{domain}/{subdomain}/date/{date}/{duration}.json",
+          "headers" : {
+            "Authorization": "OAuth oauth_consumer_key=\"{consumerkey}\", oauth_token=\"{accessToken}\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"{timestamp}\", oauth_nonce=\"{nonce}\", oauth_signature=\"{signature}\", oauth_version=\"1.0\""           
+          }
+        },
+        "functions": {
+          "getdata" : ["consumerkey","timestamp","accessToken","signature","nonce","domain","subdomain","date","duration"]
+        }
+      }
+    ]
+  }
 }
