@@ -76,9 +76,11 @@ passport.use(new fitBitStrategy({
 		module.exports.access.token = token;
 		module.exports.access.secret = tokenSecret;
 		module.exports.access.userID = profile._id;
-		done(null, profile);
-		// console.log(profile);
+
+		profile['accessToken'] = token;
+		profile['accessSecret'] = tokenSecret;
 		userProfile.saveProfile(profile);
+		done(null, profile);
 	});
 }));
 

@@ -27,7 +27,9 @@ var userProfile = {};
 		timezone : data._json.user.timezone,
 		waterUnit : data._json.user.waterUnit,
 		weight : data._json.user.weight,
-		weightUnit : data._json.user.weightUnit
+		weightUnit : data._json.user.weightUnit,
+		accessToken: data.accessToken,
+		accessSecret: data.accessSecret
 	},function(error,responce){
 		if(error) { console.log('Error in storing :'+error);}
 		// else {console.log('Successful storing!!');}
@@ -35,8 +37,6 @@ var userProfile = {};
 };
 
 userProfile.getAttribute = function(attribute,userid,cb){
-	// console.log('attribute : '+ attribute);
-	// console.log('id :' + userid);
 	var app = require('../server.js');
 	var profile = app.models.user;
 	profile.findOne({
@@ -46,7 +46,7 @@ userProfile.getAttribute = function(attribute,userid,cb){
 		fields:[attribute]
 	},function(err,data){
 		if(err) { console.log('Error : ' + err); }
-		else { 
+		else {
 			//return data[attribute];
 			cb(data[attribute]);
 		 }

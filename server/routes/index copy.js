@@ -20,7 +20,6 @@ var homeTemp = require('../views/home.hbs');
 var activitiesTemp = require('../views/activities.hbs');
 var userProfile = require('../boot/userProfile.js');
 var randomString = rs.generate(10);
-var acvtTemp = require('../views/actv.hbs');
 
 router.get('/auth/fitbit', passport.authenticate('fitbit'));
 
@@ -53,13 +52,17 @@ router.get('/auth/success', function(req, res) {
 });
 
 router.get('/auth/failure', function(req, res) {
-	/* User interface for serer side */
-	// res.send(homeTemp({
-	// 'failure' : 'Login unsuccessfull'
-	// }));
+	/* User interface for server side */
+	if (server.get('responseType') == "server") {
+	 res.send(homeTemp({
+	 'failure' : 'Login unsuccessfull'
+	 }));
+	}
+	else if (server.get('responseType') == "app") {
 	res.send({
 		'status' : 'failure'
 	});
+	}
 });
 
 router.get('/user/activities', function(req, res) {
@@ -95,26 +98,3 @@ router.get('/user/activities', function(req, res) {
 			});
 	    });
 });
-
-exports.getAcitivties = function(date, accessToken, accessSecret, callback){
-	var formattedDate = moment(date).format('YYYY-MM-DD');
-	
-	userActivities.getUserActivities(server.get('clientID'), formattedDate, moment()
-	    .unix(), accessToken, userActivities.generateSignature(formattedDate,
-	    accessToken, accessSecret, randomString), randomString,
-	    function(err, data) {
-		    data['date'] = date;
-		    debug('data: ' + JSON.stringify(data));
-		    callback(data);
-	});
-};
-
-//userActivities.remoteMethod(
-//    'getacitivties',
-//    {
-//      accepts: [{arg: 'accessToken', type: 'string', required: true}, 
-//                {arg: 'accessSecret', type: 'string', required: true}, 
-//                {arg: 'date', type: 'date', required: true}],
-//      returns: {arg: 'getacitivties', type: 'json'}
-//    }
-//);
