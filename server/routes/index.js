@@ -1,8 +1,8 @@
 /*
-	 * Set response type to 
-	 * server - for checking server side ui 
-	 * app - to send response to mobile application
-*/
+ * Set response type to 
+ * server - for checking server side ui 
+ * app - to send response to mobile application
+ */
 
 var loopback = require('loopback');
 var router = module.exports = loopback.Router();
@@ -78,43 +78,51 @@ router.get('/user/activities', function(req, res) {
 		    data['date'] = moment(date).format('MM/DD/YYYY');
 		    debug('data: ' + JSON.stringify(data));
 
-			returndata = data;
+		    returndata = data;
 
-			userProfile.getAttribute('fullName',server.access.userID,function(data){
-				returndata.summary['fullName'] = data;	
+		    userProfile.getAttribute('fullName', server.access.userID, function(
+		        data) {
+			    if (returndata.summary) {
+				    returndata.summary['fullName'] = data;
 
-				if (server.get('responseType') == "server") {
-			    res.send(activitiesTemp({
-				    'data' : returndata
-			    }));
-		    	} else if (server.get('responseType') == "app") {
+				    if (server.get('responseType') == "server") {
+					    res.send(activitiesTemp({
+						    'data' : returndata
+					    }));
+				    } else if (server.get('responseType') == "app") {
+					    res.send({
+						    'data' : returndata
+					    });
+				    }
+			    }
+			    else {
 				    res.send({
 					    'data' : returndata
 				    });
-		   	    }
-			});
+			    }
+		    });
 	    });
 });
 
-exports.getAcitivties = function(date, accessToken, accessSecret, callback){
+router.getActivities = function(date, accessToken, accessSecret, callback) {
 	var formattedDate = moment(date).format('YYYY-MM-DD');
-	
-	userActivities.getUserActivities(server.get('clientID'), formattedDate, moment()
-	    .unix(), accessToken, userActivities.generateSignature(formattedDate,
-	    accessToken, accessSecret, randomString), randomString,
-	    function(err, data) {
+
+	userActivities.getUserActivities(server.get('clientID'), formattedDate,
+	    moment().unix(), accessToken, userActivities.generateSignature(
+	        formattedDate, accessToken, accessSecret, randomString),
+	    randomString, function(err, data) {
 		    data['date'] = date;
 		    debug('data: ' + JSON.stringify(data));
 		    callback(data);
-	});
+	    });
 };
 
-//userActivities.remoteMethod(
-//    'getacitivties',
-//    {
-//      accepts: [{arg: 'accessToken', type: 'string', required: true}, 
-//                {arg: 'accessSecret', type: 'string', required: true}, 
-//                {arg: 'date', type: 'date', required: true}],
-//      returns: {arg: 'getacitivties', type: 'json'}
+// userActivities.remoteMethod(
+// 'getacitivties',
+// {
+// accepts: [{arg: 'accessToken', type: 'string', required: true},
+// {arg: 'accessSecret', type: 'string', required: true},
+// {arg: 'date', type: 'date', required: true}],
+// returns: {arg: 'getacitivties', type: 'json'}
 //    }
 //);

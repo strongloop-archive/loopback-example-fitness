@@ -1,16 +1,15 @@
 var router = require('../../server/routes/index.js');
 
-module.exports = function(userActivities){
-	router.getActivities = function(date, accessToken, accessSecret, cb) {
+module.exports = function(userActivityModel){
+	userActivityModel.getActivities = function(date, accessToken, accessSecret, cb) {
 		console.log('Start getActivities');
-		userAct.getAcitivties(function(data){
+		router.getActivities(date, accessToken, accessSecret, function(data){
 			console.log('Callback getActivities');
 			cb(null, data);
 		});
-		//cb(null, 'Greetings... ' + msg);
   };
    
-  userActivities.remoteMethod(
+  userActivityModel.remoteMethod(
       'getActivities',
       {
         accepts: [{arg: 'date', type: 'string'}, 

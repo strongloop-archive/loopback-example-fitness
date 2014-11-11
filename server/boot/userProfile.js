@@ -45,11 +45,16 @@ userProfile.getAttribute = function(attribute,userid,cb){
 		},
 		fields:[attribute]
 	},function(err,data){
-		if(err) { console.log('Error : ' + err); }
-		else {
-			//return data[attribute];
+		if(err) { 
+			console.log('Error : ' + err);
+			cb('');
+		}
+		else if(data){			
 			cb(data[attribute]);
 		 }
+		else{
+			cb('');
+		}
 	});
 };
 
