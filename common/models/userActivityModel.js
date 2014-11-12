@@ -2,9 +2,7 @@ var router = require('../../server/routes/index.js');
 
 module.exports = function(userActivityModel){
 	userActivityModel.getActivities = function(date, accessToken, accessSecret, cb) {
-		console.log('Start getActivities');
 		router.getActivities(date, accessToken, accessSecret, function(data){
-			console.log('Callback getActivities');
 			cb(null, data);
 		});
   };
