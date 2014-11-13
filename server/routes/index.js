@@ -115,13 +115,3 @@ router.getActivities = function(date, accessToken, accessSecret, callback) {
         callback(data);
       });
 };
-
-// userActivities.remoteMethod(
-// 'getacitivties',
-// {
-// accepts: [{arg: 'accessToken', type: 'string', required: true},
-// {arg: 'accessSecret', type: 'string', required: true},
-// {arg: 'date', type: 'date', required: true}],
-// returns: {arg: 'getacitivties', type: 'json'}
-// }
-// );
