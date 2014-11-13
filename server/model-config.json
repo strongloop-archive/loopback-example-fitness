@@ -8,6 +8,9 @@
   "User": {
     "dataSource": "db"
   },
+  "userActivityModel": {
+    "dataSource": "db"
+  },
   "AccessToken": {
     "dataSource": "db",
     "public": false

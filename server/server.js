@@ -6,7 +6,6 @@ var app = module.exports = loopback();
 var user = require('./fitbitAPI/userInfo.js');
 var userProfile = require('./boot/userProfile.js');
 
-
 module.exports.access = {
   "token" : "",
   "secret" : "",
@@ -31,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(loopback.session({
-	'secret' : 'Random string'
+  'secret' : 'Random string'
 }));
 
 // -- Mount static files here--
@@ -53,17 +52,17 @@ app.use(loopback.urlNotFound());
 app.use(loopback.errorHandler());
 
 app.start = function() {
-	// start the web server
-	return app.listen(function() {
-		app.emit('started');
-		console.log('Web server listening at: %s', app.get('url'));
-	});
+  // start the web server
+  return app.listen(function() {
+    app.emit('started');
+    console.log('Web server listening at: %s', app.get('url'));
+  });
 };
 
 // start the server if `$ node server.js`
 if (require.main === module) {
-	app.start();
-	// UserInfo.initLoopback();
+  app.start();
+  // UserInfo.initLoopback();
 }
 
 // Passport fitbit strategy
@@ -72,20 +71,22 @@ passport.use(new fitBitStrategy({
   consumerSecret : app.get('clientSecret'),
   callbackURL : app.get('callbackURL')
 }, function(token, tokenSecret, profile, done) {
-	process.nextTick(function() {
-		module.exports.access.token = token;
-		module.exports.access.secret = tokenSecret;
-		module.exports.access.userID = profile._id;
-		done(null, profile);
-		// console.log(profile);
-		userProfile.saveProfile(profile);
-	});
+  process.nextTick(function() {
+    module.exports.access.token = token;
+    module.exports.access.secret = tokenSecret;
+    module.exports.access.userID = profile._id;
+
+    profile['accessToken'] = token;
+    profile['accessSecret'] = tokenSecret;
+    userProfile.saveProfile(profile);
+    done(null, profile);
+  });
 }));
 
 passport.serializeUser(function(user, done) {
-	done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-	done(null, obj);
+  done(null, obj);
 });
