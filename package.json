@@ -26,5 +26,6 @@
   },
   "optionalDependencies": {
     "loopback-explorer": "^1.1.0"
-  }
+  },
+  "license": "MIT"
 }
