@@ -1,5 +1,8 @@
-#loopback-example-fitness
+**DEPRECATED AS OF 2016-09-19**
 
+---
+
+#loopback-example-fitness
 
 Example Cordova-Loopback based fitness app (modelled after Fitbit)
 
